@@ -15,7 +15,18 @@ function newQuote() {
   // 1643 quotes
   console.log(': ', quote);
 
-  authorText.textContent = quote.author;
+  // if author field is blank
+  if (!quote.author) {
+    authorText.textContent = "Unknown"
+  } else {
+    authorText.textContent = quote.author;
+  }
+  // if quote text length is long
+  if (quote.text.length > 120) {
+    quoteText.classList.add('long-quote');
+  } else {
+    quoteText.classList.remove('long-quote')
+  }
   quoteText.textContent = quote.text;
 }
 
@@ -33,6 +44,17 @@ async function getQuotes() {
     
   }
 }
+
+// twitter quote
+function tweetQuote() {
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
+
+  window.open(twitterUrl, '_blank');
+}
+
+// event listeners
+newQuoteBtn.addEventListener('click', newQuote);
+twitterBtn.addEventListener('click', tweetQuote);
 
 // on load
 getQuotes();
